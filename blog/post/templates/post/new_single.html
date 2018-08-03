@@ -1,0 +1,46 @@
+{%extends "post/base.html" %}
+
+{%block desc %}{{new.description}}{% endblock desc %}
+{% block keywords %}{{new.keywords}}{% endblock keywords%}
+{%block title%}{[new.title]}{%endblock title%}
+
+{% block content%}
+
+
+
+    <h1>{{new.title}}</h1>
+    <p>{{new.text|safe}}</p><hr>
+
+    KATEGORIA - {{new.category}}<br>
+    TEGS - {% for tag in new.tags.all %}
+                {{tag.title}}
+            {% endfor %} <br>
+    AUTOR -{{new.user}} - {{new.created}} <hr>
+
+
+    {% for comment in comments%}
+        AUTOR:   {{comment.user}}<br>
+        {{comment.text}}<br>
+        DATA: {{comment.created}}<br>
+
+    {%endfor%}
+
+    <!--{% for comment in new.com_set_all %}-->
+
+        <!--AUTOR:{{comment.user}}<br>-->
+        <!--{{comment.text}}<br>-->
+        <!--DATA: {{comment.created}}<br>-->
+    <!--{%endfor%}-->
+    {%if user.is_active%}
+        <form action="" method="post">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit">
+                SEND
+            </button>
+
+        </form>
+    {%else%}
+    <h3>BOIDITE 4TIbI SDELAT' COMENT</h3>
+    {%endif%}
+{% endblock content%}
