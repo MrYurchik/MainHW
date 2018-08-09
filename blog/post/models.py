@@ -78,3 +78,32 @@ class Com(models.Model):
 
         def __str__(self):
             return self.title
+
+
+class NewP(models.Model):
+    """клас новго поста"""
+    user = models.ForeignKey(User, verbose_name="PolsoBatel'",
+                             on_delete=models.CASCADE)
+    new = models.ForeignKey(News,
+                            verbose_name="ПОСТ",
+                            on_delete=models.CASCADE)
+
+    text = models.TextField("ПОСТ")
+    category = models.ForeignKey(Category,
+                                 verbose_name="KATEGORIA",
+                                 on_delete=models.SET_NULL,
+                                 null=True)
+    title = models.CharField("Zagolobok",
+                             max_length=150)
+    text_min = models.TextField("malenkii_text",
+                                max_length=400)
+    tags = models.ManyToManyField(Tag,
+                                  verbose_name="TEGI")
+
+
+    class Meta:
+        verbose_name = "ПОСТ"
+        verbose_name_plural = "ПОСТЫ"
+
+        def __str__(self):
+            return "{}".format(self.user)

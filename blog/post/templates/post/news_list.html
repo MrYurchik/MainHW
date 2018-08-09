@@ -1,6 +1,29 @@
+
+
+
 {% for new in news %}
-    <h2><a href="{% url 'new_single' pk=new.id %}">{{ new.title }}</a></h2>
+
     <h2>{{ new.title }}</h2>
     <p>{{ new.text_min|safe}}</p>
+
+    <h2><a href="{% url 'new_single' pk=new.id %}">{{  new.title }}<br>(ПОЛНАЯ СТАТЬЯ)</a></h2>
     <p>{{ new.created }}</p>
+
 {% endfor %}
+
+
+
+
+
+    {%if user.is_active%}
+        <form action="" method="post">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit">
+                SEND
+            </button>
+
+        </form>
+    {%else%}
+    <h3>ВОЙДИТЕ ЧТОБЫ НАПИСАТЬ ПОСТ</h3>
+    {%endif%}

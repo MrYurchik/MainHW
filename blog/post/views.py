@@ -1,14 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from post.forms import CommentForm
+from post.forms import CommentForm, PostForm
 
-from post.models import News, Com
+from post.models import News, Com, NewP
 
 
 def news_list(request):
 
     # BIBOD BSIX NOBIN
     news = News.objects.all()
-    return render(request, "post/news_list.html", {"news": news})
+                                                    #new = get_object_or_404(NewP,)
+    posts = NewP.objects.filter()
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        form = form.save(commit=False)
+        form.user = request.user
+        form.save()
+        return redirect(news_list)
+    else:
+        form = PostForm()
+
+    return render(request, "post/news_list.html", {"news": news, "posts": posts, "form": form})
 
 
 def new_single(request, pk):
